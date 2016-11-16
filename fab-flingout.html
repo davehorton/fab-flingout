@@ -1,0 +1,180 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../iron-dropdown/iron-dropdown.html">
+<link rel="import" href="../neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-from-bottom-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-down-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-up-animation.html">
+<link rel="import" href="../neon-animation/animations/fade-out-animation.html">
+
+
+<!--
+`fab-flingout`
+A floating action button that flings out subidiary buttons
+
+@demo demo/index.html
+-->
+
+<dom-module id="fab-flingout">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      #dropdown .dropdown-content ::content > .flingout-content > paper-fab  {
+        margin: 20px 0px ;
+      }
+      #dropdown .dropdown-content ::content > .flingout-content > paper-fab[mini]  {
+        margin: 20px 0px 20px 8px ;
+      }
+    </style>
+
+    <div id="trigger" on-tap="toggle">
+      <content select=".flingout-trigger"></content>
+    </div>
+
+    <iron-dropdown
+      id="dropdown"
+      opened="{{opened}}"
+      horizontal-align="left"
+      vertical-align="[[verticalAlign]]"
+      dynamic-align="[[dynamicAlign]]"
+      horizontal-offset="[[horizontalOffset]]"
+      vertical-offset="[[verticalOffset]]"
+      no-overlap="true"
+      open-animation-config="[[openAnimationConfig]]"
+      close-animation-config="[[closeAnimationConfig]]"
+      no-animations="[[noAnimations]]"
+      focus-target="[[_dropdownContent]]"
+      allow-outside-scroll="[[allowOutsideScroll]]"
+      restore-focus-on-close="[[restoreFocusOnClose]]"
+      on-iron-overlay-canceled="__onIronOverlayCanceled">
+      <div class="dropdown-content">
+        <content id="content" select=".flingout-content"></content>
+      </div>
+    </iron-dropdown>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'fab-flingout',
+
+      properties: {
+        /**
+         * True if the content is currently displayed.
+         */
+        opened: {
+          type: Boolean,
+          value: false,
+          notify: true
+        },
+
+        /**
+         * The orientation against which to align the menu dropdown
+         * vertically relative to the dropdown trigger.
+         */
+        verticalAlign: {
+          type: String,
+          value: 'top',
+          reflectToAttribute: true
+        },
+
+        /**
+         * An animation config. If provided, this will be used to animate the
+         * opening of the dropdown.
+         */
+        openAnimationConfig: {
+          type: Object,
+          computed: '_computeOpenAnimationConfig(verticalAlign)'
+        },
+
+        /**
+         * An animation config. If provided, this will be used to animate the
+         * closing of the dropdown.
+         */
+        closeAnimationConfig: {
+          type: Object,
+          computed: '_computeCloseAnimationConfig(verticalAlign)'
+        },
+
+      },
+
+      /**
+       * Toggles the drowpdown content between opened and closed.
+       */
+      toggle: function() {
+        this.opened = !this.opened ;
+      },
+
+      _computeOpenAnimationConfig: function(verticalAlign) {
+        if( 'bottom' === this.verticalAlign ) {
+          return [ {
+            name: 'slide-from-bottom-animation',
+            timing: {
+              delay: 0,
+              duration: 500
+            }
+          }, {
+            name: 'fade-in-animation',
+            timing: {
+              delay: 100,
+              duration: 400
+            }
+          }];
+        }
+        else {
+          return [ {
+            name: 'slide-from-top-animation',
+            timing: {
+              delay: 0,
+              duration: 500
+            }
+          }, {
+            name: 'fade-in-animation',
+            timing: {
+              delay: 100,
+              duration: 400
+            }
+          }];
+        }
+      },
+
+      _computeCloseAnimationConfig: function(verticalAlign) {
+        console.log('verticalAlign: %s', this.verticalAlign) ;
+        if( 'bottom' === this.verticalAlign ) {
+          return [{
+            name: 'fade-out-animation',
+            timing: {
+              delay: 0,
+              duration: 400
+            }
+          }, {
+            name: 'slide-down-animation',
+            timing: {
+              delay: 0,
+              duration: 500
+            }
+          }];
+        }
+        else {
+          return [{
+            name: 'fade-out-animation',
+            timing: {
+              delay: 0,
+              duration: 400
+            }
+          }, {
+            name: 'slide-up-animation',
+            timing: {
+              delay: 0,
+              duration: 500
+            }
+          }];
+        }
+      }
+    });
+  </script>
+</dom-module>
