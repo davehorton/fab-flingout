@@ -1,12 +1,14 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../iron-dropdown/iron-dropdown.html">
+<link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
 <link rel="import" href="../neon-animation/animations/fade-in-animation.html">
 <link rel="import" href="../neon-animation/animations/slide-from-bottom-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-from-top-animation.html">
 <link rel="import" href="../neon-animation/animations/slide-down-animation.html">
 <link rel="import" href="../neon-animation/animations/slide-up-animation.html">
 <link rel="import" href="../neon-animation/animations/fade-out-animation.html">
-
+<link rel="import" href="fab-flingout-animations.html">
 
 <!--
 `fab-flingout`
@@ -22,16 +24,17 @@ A floating action button that flings out subidiary buttons
         display: block;
       }
 
-      #dropdown .dropdown-content ::content > .flingout-content > paper-fab  {
+      #dropdown .dropdown-content ::content > paper-fab  {
         margin: 20px 0px ;
       }
-      #dropdown .dropdown-content ::content > .flingout-content > paper-fab[mini]  {
+      #dropdown .dropdown-content ::content > paper-fab[mini]  {
         margin: 20px 0px 20px 8px ;
       }
+
     </style>
 
-    <div id="trigger" on-tap="toggle">
-      <content select=".flingout-trigger"></content>
+    <div on-tap="toggle">
+      <paper-fab id="trigger" icon="[[_icon]]" class$="{{getTriggerClasses(opened)}}"></paper-fab>
     </div>
 
     <iron-dropdown
@@ -51,7 +54,7 @@ A floating action button that flings out subidiary buttons
       restore-focus-on-close="[[restoreFocusOnClose]]"
       on-iron-overlay-canceled="__onIronOverlayCanceled">
       <div class="dropdown-content">
-        <content id="content" select=".flingout-content"></content>
+        <content id="content"></content>
       </div>
     </iron-dropdown>
 
@@ -61,8 +64,30 @@ A floating action button that flings out subidiary buttons
     Polymer({
 
       is: 'fab-flingout',
-
+      behaviors: [Polymer.NeonAnimationRunnerBehavior],
       properties: {
+
+        /*
+         * icon to display when the list is not displayed
+         */
+        openIcon: {
+          type: String,
+          value: 'add'
+        },
+
+        /*
+         * icon to display when the list is displayed
+         */
+        closeIcon: {
+          type: String,
+          value: 'close'
+        },
+
+        _icon: {
+          type: String,
+          computed: '_computeIcon(opened)'
+        },
+
         /**
          * True if the content is currently displayed.
          */
@@ -100,6 +125,29 @@ A floating action button that flings out subidiary buttons
           computed: '_computeCloseAnimationConfig(verticalAlign)'
         },
 
+        animationConfig: {
+          value: function() {
+            return {
+              'rotateToClose': {
+                name: 'fab-flingout-spin-right-45',
+                node: this.$.trigger,
+                timing: {
+                  delay: 0,
+                  duration: 200
+                }
+              },
+              'rotateToOpen': {
+                name: 'fab-flingout-spin-left-45',
+                node: this.$.trigger,
+                timing: {
+                  delay: 0,
+                  duration: 200
+                }
+              }
+            } ;
+          }
+        }
+
       },
 
       /**
@@ -107,6 +155,11 @@ A floating action button that flings out subidiary buttons
        */
       toggle: function() {
         this.opened = !this.opened ;
+        this.playAnimation(this.opened ? 'rotateToClose' : 'rotateToOpen');
+      },
+
+      _computeIcon: function( opened ) {
+        return opened ? this.closeIcon : this.openIcon ;
       },
 
       _computeOpenAnimationConfig: function(verticalAlign) {
@@ -149,13 +202,13 @@ A floating action button that flings out subidiary buttons
             name: 'fade-out-animation',
             timing: {
               delay: 0,
-              duration: 400
+              duration: 500
             }
           }, {
             name: 'slide-down-animation',
             timing: {
-              delay: 0,
-              duration: 500
+              delay: 100,
+              duration: 400
             }
           }];
         }
@@ -164,16 +217,20 @@ A floating action button that flings out subidiary buttons
             name: 'fade-out-animation',
             timing: {
               delay: 0,
-              duration: 400
+              duration: 500
             }
           }, {
             name: 'slide-up-animation',
             timing: {
-              delay: 0,
-              duration: 500
+              delay: 100,
+              duration: 400
             }
           }];
         }
+      },
+
+      getTriggerClasses: function(opened) {
+        return opened ? 'open' : '' ;
       }
     });
   </script>
