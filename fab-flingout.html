@@ -66,14 +66,11 @@ A floating action button that flings out subidiary buttons
       opened="{{opened}}"
       horizontal-align="left"
       vertical-align="[[verticalAlign]]"
-      dynamic-align="[[dynamicAlign]]"
-      horizontal-offset="[[horizontalOffset]]"
-      vertical-offset="[[verticalOffset]]"
+      dynamic-align="true"
+      horizontal-offset="0"
+      vertical-offset="0"
       no-overlap="true"
       no-animations="true"
-      focus-target="[[_dropdownContent]]"
-      allow-outside-scroll="[[allowOutsideScroll]]"
-      restore-focus-on-close="[[restoreFocusOnClose]]"
       on-iron-overlay-opened="_onIronOverlayOpened">
       <div class="dropdown-content">
         <content id="content"></content>
