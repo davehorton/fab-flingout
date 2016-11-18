@@ -159,16 +159,21 @@ A floating action button that flings out subidiary buttons
         this.opened = !this.opened ;
       },
 
-      _onIronOverlayOpened: function() {
-
-        var fabs = this.getContentChildren() ;
+      _onIronOverlayOpened: function(e) {
+        var rect = this.$.dropdown.getBoundingClientRect() ;
         var triggerBoundingRect = this.$.trigger.getBoundingClientRect() ;
+        console.log('onIronOverlayOpened: trigger fab rect ', triggerBoundingRect);
+        console.log('onIronOverlayOpened: iron-dropdown rect ', rect);
+
+        var droppedDown = triggerBoundingRect.top < rect.top ;
+        console.log('dropped %s', droppedDown ? 'down': 'up') ;
+        var fabs = this.getContentChildren() ;
         fabs.forEach( function(fab, idx) {
 
           //create the animation config the first time through
           var buttonName = 'paper-fab-' + (idx+1) ;
           var openAnimation = buttonName + '-open' ;
-          if( !( openAnimation in this.animationConfig ) ) {
+          //if( !( openAnimation in this.animationConfig ) ) {
             // set up animations
 
             var rect = fab.getBoundingClientRect() ;
@@ -181,12 +186,12 @@ A floating action button that flings out subidiary buttons
               node: fab,
               offset: offset,
               timing: {
-                delay: offset.y > 0 ? idx * 100 : (fabs.length - idx) * 100,
+                delay: droppedDown  ? (fabs.length - idx) * 100 : idx * 100,
                 duration: 500,
                 easing: 'ease'
               }
             } ;
-          }
+          //}
           this.playAnimation(openAnimation, openAnimation) ;
         }, this) ;
       },
