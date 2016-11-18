@@ -43,51 +43,46 @@
   });
 
   Polymer({
-    is: 'paper-menu-shrink-width-animation',
-
+    is: 'fab-slide-out',
     behaviors: [
       Polymer.NeonAnimationBehavior
     ],
 
     configure: function(config) {
       var node = config.node;
-      var rect = node.getBoundingClientRect();
-      var width = rect.width;
+      var offset = config.offset ;
 
-      this._effect = new KeyframeEffect(node, [{
-        width: width + 'px'
-      }, {
-        width: width - (width / 20) + 'px'
-      }], this.timingFromConfig(config));
+      var arr = [
+        {'transform': 'translateX(' + offset.x + 'px)', offset: 0},
+        {'transform': 'translateY(' + offset.y + 'px)', offset: 0},
+        {'transform': 'translateX(0%)', offset: 1.0},
+        {'transform': 'translateY(0%)', offset: 1.0}
+      ] ;
+      this._effect = new KeyframeEffect(node, arr, this.timingFromConfig(config));
 
       return this._effect;
     }
   });
 
   Polymer({
-    is: 'paper-menu-shrink-height-animation',
-
+    is: 'fab-slide-in',
     behaviors: [
       Polymer.NeonAnimationBehavior
     ],
 
     configure: function(config) {
       var node = config.node;
-      var rect = node.getBoundingClientRect();
-      var height = rect.height;
-      var top = rect.top;
-
-      this.setPrefixedProperty(node, 'transformOrigin', '0 0');
-
-      this._effect = new KeyframeEffect(node, [{
-        height: height + 'px',
-        transform: 'translateY(0)'
-      }, {
-        height: height / 2 + 'px',
-        transform: 'translateY(-20px)'
-      }], this.timingFromConfig(config));
+      var offset = config.offset  ;
+      var arr = [
+        {'transform': 'translateX(0%)', offset: 0},
+        {'transform': 'translateY(0%)', offset: 0},
+        {'transform': 'translateX(' + offset.x + 'px)', offset: 1.0},
+        {'transform': 'translateY(' + offset.y + 'px)', offset: 1.0}
+      ] ;
+      this._effect = new KeyframeEffect(node, arr, this.timingFromConfig(config));
 
       return this._effect;
     }
   });
+
 </script>

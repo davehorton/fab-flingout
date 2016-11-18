@@ -22,10 +22,34 @@ A floating action button that flings out subidiary buttons
     <style>
       :host {
         display: block;
+
+        @apply(--fab-flingout);
+      }
+
+      :host([disabled]) {
+        cursor: auto;
+        color: var(--disabled-text-color);
+
+        @apply(--fab-flingout-disabled);
+      }
+
+      .dropdown-content {
+        @apply(--fab-flingout-content);
+      }
+
+      #trigger {
+        cursor: pointer;
+
+        color: var(--fab-flingout-trigger-color) ;
+        background-color: var(--fab-flingout-trigger-background-color) ;
+        background-color: var(--fab-flingout-trigger-background-color) ;
       }
 
       #dropdown .dropdown-content ::content > paper-fab  {
         margin: 20px 0px ;
+        color: var(--fab-flingout-color) ;
+        background-color: var(--fab-flingout-background-color) ;
+        @apply(--fab-flingout-fabs);
       }
       #dropdown .dropdown-content ::content > paper-fab[mini]  {
         margin: 20px 0px 20px 8px ;
@@ -46,13 +70,11 @@ A floating action button that flings out subidiary buttons
       horizontal-offset="[[horizontalOffset]]"
       vertical-offset="[[verticalOffset]]"
       no-overlap="true"
-      open-animation-config="[[openAnimationConfig]]"
-      close-animation-config="[[closeAnimationConfig]]"
-      no-animations="[[noAnimations]]"
+      no-animations="true"
       focus-target="[[_dropdownContent]]"
       allow-outside-scroll="[[allowOutsideScroll]]"
       restore-focus-on-close="[[restoreFocusOnClose]]"
-      on-iron-overlay-canceled="__onIronOverlayCanceled">
+      on-iron-overlay-opened="_onIronOverlayOpened">
       <div class="dropdown-content">
         <content id="content"></content>
       </div>
@@ -107,24 +129,6 @@ A floating action button that flings out subidiary buttons
           reflectToAttribute: true
         },
 
-        /**
-         * An animation config. If provided, this will be used to animate the
-         * opening of the dropdown.
-         */
-        openAnimationConfig: {
-          type: Object,
-          computed: '_computeOpenAnimationConfig(verticalAlign)'
-        },
-
-        /**
-         * An animation config. If provided, this will be used to animate the
-         * closing of the dropdown.
-         */
-        closeAnimationConfig: {
-          type: Object,
-          computed: '_computeCloseAnimationConfig(verticalAlign)'
-        },
-
         animationConfig: {
           value: function() {
             return {
@@ -154,79 +158,43 @@ A floating action button that flings out subidiary buttons
        * Toggles the drowpdown content between opened and closed.
        */
       toggle: function() {
+        this.playAnimation(this.opened ? 'rotateToOpen' : 'rotateToClose');
         this.opened = !this.opened ;
-        this.playAnimation(this.opened ? 'rotateToClose' : 'rotateToOpen');
       },
 
+      _onIronOverlayOpened: function() {
+
+        var fabs = this.getContentChildren() ;
+        var triggerBoundingRect = this.$.trigger.getBoundingClientRect() ;
+        fabs.forEach( function(fab, idx) {
+
+          //create the animation config the first time through
+          var buttonName = 'paper-fab-' + (idx+1) ;
+          var openAnimation = buttonName + '-open' ;
+          if( !( openAnimation in this.animationConfig ) ) {
+            // set up animations
+
+            var rect = fab.getBoundingClientRect() ;
+            var offset =  {
+              x: 0,
+              y: Math.floor( triggerBoundingRect.top - rect.top )
+            } ;
+            this.animationConfig[openAnimation] = {
+              name: 'fab-slide-out',
+              node: fab,
+              offset: offset,
+              timing: {
+                delay: offset.y > 0 ? idx * 100 : (fabs.length - idx) * 100,
+                duration: 500,
+                easing: 'ease'
+              }
+            } ;
+          }
+          this.playAnimation(openAnimation, openAnimation) ;
+        }, this) ;
+      },
       _computeIcon: function( opened ) {
         return opened ? this.closeIcon : this.openIcon ;
-      },
-
-      _computeOpenAnimationConfig: function(verticalAlign) {
-        if( 'bottom' === this.verticalAlign ) {
-          return [ {
-            name: 'slide-from-bottom-animation',
-            timing: {
-              delay: 0,
-              duration: 500
-            }
-          }, {
-            name: 'fade-in-animation',
-            timing: {
-              delay: 100,
-              duration: 400
-            }
-          }];
-        }
-        else {
-          return [ {
-            name: 'slide-from-top-animation',
-            timing: {
-              delay: 0,
-              duration: 500
-            }
-          }, {
-            name: 'fade-in-animation',
-            timing: {
-              delay: 100,
-              duration: 400
-            }
-          }];
-        }
-      },
-
-      _computeCloseAnimationConfig: function(verticalAlign) {
-        console.log('verticalAlign: %s', this.verticalAlign) ;
-        if( 'bottom' === this.verticalAlign ) {
-          return [{
-            name: 'fade-out-animation',
-            timing: {
-              delay: 0,
-              duration: 500
-            }
-          }, {
-            name: 'slide-down-animation',
-            timing: {
-              delay: 100,
-              duration: 400
-            }
-          }];
-        }
-        else {
-          return [{
-            name: 'fade-out-animation',
-            timing: {
-              delay: 0,
-              duration: 500
-            }
-          }, {
-            name: 'slide-up-animation',
-            timing: {
-              delay: 100,
-              duration: 400
-            }
-          }];
-        }
       },
 
       getTriggerClasses: function(opened) {
