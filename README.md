@@ -1,4 +1,7 @@
+[![Build status](https://travis-ci.org/davehorton/fab-flingout.svg?branch=master)](https://travis-ci.org/davehorton/fab-flingout)
+
 # \<fab-flingout\>
+
 
 A floating action button that flings out subidiary buttons
 
