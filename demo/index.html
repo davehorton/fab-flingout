@@ -23,6 +23,9 @@
           <fab-flingout>
             <paper-fab icon="dns"></paper-fab>
             <paper-fab icon="close"></paper-fab>
+            <paper-fab icon="add-alert"></paper-fab>
+            <paper-fab icon="build"></paper-fab>
+            <paper-fab icon="event"></paper-fab>
           </fab-flingout>
         </template>
       </demo-snippet>
@@ -33,9 +36,45 @@
           <fab-flingout vertical-align="bottom">
             <paper-fab mini icon="dns"></paper-fab>
             <paper-fab mini icon="close"></paper-fab>
+            <paper-fab mini icon="add-alert"></paper-fab>
+            <paper-fab mini icon="build"></paper-fab>
+            <paper-fab mini icon="event"></paper-fab>
           </fab-flingout>
         </template>
       </demo-snippet>
+
+      <h3>Customize trigger button color</h3>
+      <demo-snippet>
+        <template>
+          <style is="custom-style">
+          .green {
+            --fab-flingout-trigger-background-color: green;
+          }
+          </style>
+          <fab-flingout class="green">
+            <paper-fab icon="dns"></paper-fab>
+            <paper-fab icon="close"></paper-fab>
+          </fab-flingout>
+        </template>
+      </demo-snippet>
+
+      <h3>Customize subsidiary trigger buttons</h3>
+      <demo-snippet>
+        <template>
+          <style is="custom-style">
+          .custom {
+            --fab-flingout-background-color: green;
+            --fab-flingout-trigger-background-color: green;
+          }
+          </style>
+          <fab-flingout class="custom">
+            <paper-fab icon="dns"></paper-fab>
+            <paper-fab icon="close"></paper-fab>
+          </fab-flingout>
+        </template>
+      </demo-snippet>
+
     </div>
+
   </body>
 </html>
