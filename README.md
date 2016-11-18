@@ -2,7 +2,6 @@
 
 # \<fab-flingout\>
 
-
 A floating action button that flings out subidiary buttons
 
 ## Install the Polymer-CLI
