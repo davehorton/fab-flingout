@@ -1,0 +1,23 @@
+{
+  "name": "fab-flingout",
+  "version": "1.0.0",
+  "description": "A floating action button that flings out subidiary buttons",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-gh-pages": "^0.5.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davehorton/fab-flingout.git"
+  },
+  "author": "Dave Horton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davehorton/fab-flingout/issues"
+  },
+  "homepage": "https://github.com/davehorton/fab-flingout#readme"
+}
