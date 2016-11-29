@@ -1,6 +1,8 @@
 {
   "name": "fab-flingout",
   "description": "A floating action button that flings out subidiary buttons",
+  "version": "0.0.1",
+  "license": "MIT",
   "main": "fab-flingout.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",

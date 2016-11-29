@@ -65,7 +65,7 @@ A floating action button that flings out subidiary buttons
       id="dropdown"
       opened="{{opened}}"
       horizontal-align="left"
-      vertical-align="[[verticalAlign]]"
+      vertical-align="[[_getVerticalAlign(direction)]]"
       dynamic-align="true"
       horizontal-offset="0"
       vertical-offset="0"
@@ -117,12 +117,11 @@ A floating action button that flings out subidiary buttons
         },
 
         /**
-         * The orientation against which to align the menu dropdown
-         * vertically relative to the dropdown trigger.
+         * The direction (up or down) in which to spew the paper-fabs.
          */
-        verticalAlign: {
+        direction: {
           type: String,
-          value: 'top',
+          value: 'down',
           reflectToAttribute: true
         },
 
@@ -205,6 +204,10 @@ A floating action button that flings out subidiary buttons
 
       _getTriggerClasses: function(opened) {
         return opened ? 'open' : '' ;
+      },
+
+      _getVerticalAlign: function(direction) {
+        return 'up' === direction ? 'bottom': 'top';
       }
     });
   </script>
