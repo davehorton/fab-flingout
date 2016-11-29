@@ -1,40 +1,45 @@
 [![Build status](https://travis-ci.org/davehorton/fab-flingout.svg?branch=master)](https://travis-ci.org/davehorton/fab-flingout)
 
-# \<fab-flingout\>
+# `<fab-flingout>`
 
-A floating action button that flings out subidiary buttons
+A floating action button that flings out subsidiary buttons (i.e. speed dial)
 
-## Install the Polymer-CLI
+## Using **fab-flingout** Element in your Project
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
-
-## Viewing Your Application
+Install this using bower
 
 ```
-$ polymer serve
+$ bower install fab-flingout --save
 ```
 
-## Building Your Application
+Add the element element using html imports
 
 ```
-$ polymer build
+<link rel="import" href="../fab-flingout.html">
 ```
 
-This will create a `build/` folder with `bundled/` and `unbundled/` sub-folders
-containing a bundled (Vulcanized) and unbundled builds, both run through HTML,
-CSS, and JS optimizers.
-
-You can serve the built versions by giving `polymer serve` a folder to serve
-from:
-
-```
-$ polymer serve build/bundled
-```
-
-## Running Tests
-
-```
-$ polymer test
+Example:
+```    
+<fab-flingout>
+  <paper-fab icon="dns"></paper-fab>
+  <paper-fab icon="add-alert"></paper-fab>
+  <paper-fab icon="build"></paper-fab>
+  <paper-fab icon="event"></paper-fab>
+</fab-flingout>
 ```
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+Simply add `<paper-fab>` elements to the content of this element.  
+A 'trigger' fab with an 'add' icon will initially display, and will animate to show the contained paper-fabs when clicked.
+
+### Styling
+The following custom properties and mixins are available for styling
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--fab-flingout-trigger-color` |  Color of the trigger floating action button |
+`--fab-flingout-trigger-background-color` |  Background color of the trigger floating action button |
+`--fab-flingout-color` |  Color of the contained floating action buttons |
+`--fab-flingout-background-color` |  Background color of the contained floating action buttons |
+`--fab-flingout` | Mixin for trigger floating action button | {}
+`--fab-flingout-disabled` | Mixin for trigger floating action button, applied when button is disabled | {}
+`--fab-flingout-content` | Mixin for contained floating action buttons | {}
