@@ -6,8 +6,9 @@
   "main": "fab-flingout.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "paper-elements": "PolymerElements/paper-elements#^1.0.0",
-    "neon-elements": "PolymerElements/neon-elements#^1.0.0"
+    "neon-elements": "PolymerElements/neon-elements#^1.0.0",
+    "paper-fab": "PolymerElements/paper-fab#^1.2.1",
+    "iron-dropdown": "PolymerElements/iron-dropdown#^1.5.3"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",

@@ -173,25 +173,23 @@ A floating action button that flings out subidiary buttons
           //create the animation config the first time through
           var buttonName = 'paper-fab-' + (idx+1) ;
           var openAnimation = buttonName + '-open' ;
-          //if( !( openAnimation in this.animationConfig ) ) {
-            // set up animations
 
-            var rect = fab.getBoundingClientRect() ;
-            var offset =  {
-              x: 0,
-              y: Math.floor( triggerBoundingRect.top - rect.top )
-            } ;
-            this.animationConfig[openAnimation] = {
-              name: 'fab-slide-out',
-              node: fab,
-              offset: offset,
-              timing: {
-                delay: droppedDown  ? (fabs.length - idx) * 100 : idx * 100,
-                duration: 500,
-                easing: 'ease'
-              }
-            } ;
-          //}
+          var rect = fab.getBoundingClientRect() ;
+          var offset =  {
+            x: 0,
+            y: Math.floor( triggerBoundingRect.top - rect.top )
+          } ;
+          this.animationConfig[openAnimation] = {
+            name: 'fab-slide-out',
+            node: fab,
+            offset: offset,
+            timing: {
+              delay: droppedDown  ? (fabs.length - idx) * 100 : idx * 100,
+              duration: 500,
+              easing: 'ease'
+            }
+          } ;
+
           this.playAnimation(openAnimation, openAnimation) ;
         }, this) ;
       },
