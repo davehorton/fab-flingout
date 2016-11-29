@@ -4,6 +4,16 @@
   "version": "0.0.2",
   "license": "MIT",
   "main": "fab-flingout.html",
+  "authors": [
+    "Dave Horton <daveh@beachdognet.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
