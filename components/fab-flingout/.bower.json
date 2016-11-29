@@ -23,11 +23,11 @@
     "button"
   ],
   "homepage": "https://github.com/davehorton/fab-flingout",
-  "_release": "bc32fe3044",
+  "_release": "93741998c8",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "bc32fe3044e3d1a393a95ef4050870608b9cb4a0"
+    "commit": "93741998c844e8c062cb4a073602c9736b1b30f9"
   },
   "_source": "https://github.com/davehorton/fab-flingout.git",
   "_target": "*",

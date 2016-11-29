@@ -165,11 +165,8 @@ A floating action button that flings out subidiary buttons
       _onIronOverlayOpened: function(e) {
         var rect = this.$.dropdown.getBoundingClientRect() ;
         var triggerBoundingRect = this.$.trigger.getBoundingClientRect() ;
-        console.log('onIronOverlayOpened: trigger fab rect ', triggerBoundingRect);
-        console.log('onIronOverlayOpened: iron-dropdown rect ', rect);
 
         var droppedDown = triggerBoundingRect.top < rect.top ;
-        console.log('dropped %s', droppedDown ? 'down': 'up') ;
         var fabs = this.getContentChildren() ;
         fabs.forEach( function(fab, idx) {
 
