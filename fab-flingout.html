@@ -58,7 +58,7 @@ A floating action button that flings out subidiary buttons
     </style>
 
     <div on-tap="toggle">
-      <paper-fab id="trigger" icon="[[_icon]]" class$="{{getTriggerClasses(opened)}}"></paper-fab>
+      <paper-fab id="trigger" icon="[[_icon]]" class$="{{_getTriggerClasses(opened)}}"></paper-fab>
     </div>
 
     <iron-dropdown
@@ -126,7 +126,11 @@ A floating action button that flings out subidiary buttons
           reflectToAttribute: true
         },
 
+        /**
+         * animationConfig for rotating the primary button from opened to closed and vice versa
+         */
         animationConfig: {
+          type: Object,
           value: function() {
             return {
               'rotateToClose': {
@@ -199,7 +203,7 @@ A floating action button that flings out subidiary buttons
         return opened ? this.closeIcon : this.openIcon ;
       },
 
-      getTriggerClasses: function(opened) {
+      _getTriggerClasses: function(opened) {
         return opened ? 'open' : '' ;
       }
     });
