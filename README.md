@@ -33,6 +33,20 @@ Example:
 Simply add `<paper-fab>` elements to the content of this element.  
 A 'trigger' fab with an 'add' icon will initially display, and will animate to show the contained paper-fabs when clicked.
 
+By default, the contained buttons will display below the trigger button in a vertical list; use the `direction` property with a value of `"up"` to display them above.
+
+> Note: the `direction` property states a preference, but if there is not enough room on the screen to show the full list of buttons in the preferred direction then they will animate in the other direction.
+
+```    
+<fab-flingout direction="up">
+  <paper-fab icon="dns"></paper-fab>
+  <paper-fab icon="add-alert"></paper-fab>
+  <paper-fab icon="build"></paper-fab>
+  <paper-fab icon="event"></paper-fab>
+</fab-flingout>
+```
+
+
 ### Styling
 The following custom properties and mixins are available for styling
 
