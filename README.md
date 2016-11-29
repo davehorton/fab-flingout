@@ -4,6 +4,8 @@
 
 A floating action button that flings out subsidiary buttons (i.e. speed dial)
 
+[Demo and Docs](https://davehorton.github.io/fab-flingout)
+
 ## Using **fab-flingout** Element in your Project
 
 Install this using bower
