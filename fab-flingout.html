@@ -21,9 +21,14 @@ A floating action button that flings out subidiary buttons
   <template>
     <style>
       :host {
-        display: block;
+        display: flex;
+        flex-direction: row;
 
         @apply(--fab-flingout);
+      }
+
+      :host([horizontal-align=right]) {
+        justify-content: flex-end;
       }
 
       :host([disabled]) {
@@ -64,7 +69,7 @@ A floating action button that flings out subidiary buttons
     <iron-dropdown
       id="dropdown"
       opened="{{opened}}"
-      horizontal-align="left"
+      horizontal-align="[[horizontalAlign]]"
       vertical-align="[[_getVerticalAlign(direction)]]"
       dynamic-align="true"
       horizontal-offset="0"
@@ -126,6 +131,15 @@ A floating action button that flings out subidiary buttons
         },
 
         /**
+         * the alignment on the x axis of the trigger and the dropdown
+         */
+         horizontalAlign: {
+           type: String,
+           value: 'left',
+           reflectToAttribute: true
+         },
+
+        /**
          * animationConfig for rotating the primary button from opened to closed and vice versa
          */
         animationConfig: {
@@ -173,23 +187,25 @@ A floating action button that flings out subidiary buttons
           //create the animation config the first time through
           var buttonName = 'paper-fab-' + (idx+1) ;
           var openAnimation = buttonName + '-open' ;
+          //if( !( openAnimation in this.animationConfig ) ) {
+            // set up animations
 
-          var rect = fab.getBoundingClientRect() ;
-          var offset =  {
-            x: 0,
-            y: Math.floor( triggerBoundingRect.top - rect.top )
-          } ;
-          this.animationConfig[openAnimation] = {
-            name: 'fab-slide-out',
-            node: fab,
-            offset: offset,
-            timing: {
-              delay: droppedDown  ? (fabs.length - idx) * 100 : idx * 100,
-              duration: 500,
-              easing: 'ease'
-            }
-          } ;
-
+            var rect = fab.getBoundingClientRect() ;
+            var offset =  {
+              x: 0,
+              y: Math.floor( triggerBoundingRect.top - rect.top )
+            } ;
+            this.animationConfig[openAnimation] = {
+              name: 'fab-slide-out',
+              node: fab,
+              offset: offset,
+              timing: {
+                delay: droppedDown  ? (fabs.length - idx) * 100 : idx * 100,
+                duration: 500,
+                easing: 'ease'
+              }
+            } ;
+          //}
           this.playAnimation(openAnimation, openAnimation) ;
         }, this) ;
       },
